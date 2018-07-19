@@ -4,6 +4,7 @@ using App.SSO;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Infrastructure.Cache;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Repository.Interface;
@@ -33,7 +34,7 @@ namespace App
             //缓存注入
             services.AddScoped(typeof(ICacheContext), typeof(CacheContext));
 
-            //services.AddScoped(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
+            services.AddScoped(typeof(IHttpContextAccessor), typeof(HttpContextAccessor));
 
             builder.Populate(services);
 
