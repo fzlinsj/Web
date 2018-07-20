@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Infrastructure.Cache;
 using Repository.Domain;
 using Repository.Interface;

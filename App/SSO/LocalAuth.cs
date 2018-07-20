@@ -114,6 +114,26 @@ namespace App.SSO
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="appKey">应用程序key.</param>
+        /// <param name="username">用户名</param>
+        /// <param name="pwd">密码</param>
+        /// <param name="checkcode">校验码</param>
+        /// <returns></returns>
+        public LoginResult Login(string appKey,string username, string pwd, string checkcode)
+        {
+            return _loginParse.Do(new PassportLoginRequest
+            {
+                AppKey = appKey,
+                Account = username,
+                Password = pwd,
+                CheckCode = checkcode
+            });
+
+        }
+
+        /// <summary>
         /// 注销
         /// </summary>
         public bool Logout()

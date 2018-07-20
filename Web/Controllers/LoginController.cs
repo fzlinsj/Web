@@ -31,12 +31,15 @@ namespace Web.Controllers
         public FileContentResult NumberVerifyCode()
         {
             var code = VerifyCodeHelper.GetSingleObj().CreateVerifyCode(VerifyCodeHelper.VerifyCodeType.NumberVerifyCode);
+
+            HttpContext.Session.SetString("CheckCode",code);
+
             var codeImage = VerifyCodeHelper.GetSingleObj().CreateByteByImgVerifyCode(code, 70, 36);
             return File(codeImage, @"image/jpeg");
         }
 
 
-        public string Login(string password, string username)
+        public string Login(string password, string username,string verifycode)
         {
             var resp = new Response();
             try

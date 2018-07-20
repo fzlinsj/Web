@@ -45,6 +45,10 @@ namespace Web
             //映射配置文件
             services.Configure<AppSetting>(Configuration.GetSection("AppSetting"));
 
+            //添加Session相关
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             //使用AutoFac进行注入
             return new AutofacServiceProvider(AutofacExt.InitAutofac(services));
         }

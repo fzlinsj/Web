@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace App.SSO
 {
@@ -11,6 +9,8 @@ namespace App.SSO
         public string Password { get; set; }
 
         public string AppKey { get; set; }
+
+        public string CheckCode { get; set; }
 
         public void Trim()
         {
@@ -23,8 +23,15 @@ namespace App.SSO
             {
                 throw new Exception("密码不能为空");
             }
+
+            if (string.IsNullOrEmpty(CheckCode))
+            {
+                throw new Exception("校验码不能为空");
+            }
+
             Account = Account.Trim();
             Password = Password.Trim();
+            CheckCode = CheckCode.Trim();
             if (!string.IsNullOrEmpty(AppKey)) AppKey = AppKey.Trim();
         }
     }
