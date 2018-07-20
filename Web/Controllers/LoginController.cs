@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using App.Interface;
 using Infrastructure;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +29,16 @@ namespace Web.Controllers
         {
             var code = VerifyCodeHelper.GetSingleObj().CreateVerifyCode(VerifyCodeHelper.VerifyCodeType.NumberVerifyCode);
 
-            HttpContext.Session.SetString("CheckCode",code);
+            try
+            {
+                HttpContext.Session.SetString("CheckCode", code);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+            
 
             var codeImage = VerifyCodeHelper.GetSingleObj().CreateByteByImgVerifyCode(code, 70, 36);
             return File(codeImage, @"image/jpeg");
@@ -42,25 +48,41 @@ namespace Web.Controllers
         public string Login(string password, string username,string verifycode)
         {
             var resp = new Response();
-            try
+
+            var checkCode=HttpContext.Session.GetString("CheckCode");
+
+            if (!checkCode.Equals(verifycode))
             {
-                var result = _authUtil.Login("", username, password);
-                if (result.Code == 200)
-                {
-                    Response.Cookies.Append("Token", result.Token);
-                }
-                else
-                {
-                    resp.Code = 500;
-                    resp.Message = result.Message;
-                }
+
+                resp.Code = 500;
+                resp.Message = "验证码不正确!";
 
             }
-            catch (Exception e)
+            else
             {
-                resp.Code = 500;
-                resp.Message = e.Message;
+                try
+                {
+                    var result = _authUtil.Login("", username, password, verifycode);
+                    if (result.Code == 200)
+                    {
+                        Response.Cookies.Append("Token", result.Token);
+                    }
+                    else
+                    {
+                        resp.Code = 500;
+                        resp.Message = result.Message;
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    resp.Code = 500;
+                    resp.Message = e.Message;
+                }
             }
+
+
+          
 
             return JsonHelper.Instance.Serialize(resp);
         }

@@ -49,15 +49,15 @@
                         <input name="password" type="password" id="password" value="" class="loginpwd ipt" placeholder="请输入密码" lay-verify="required">
                     </li>
                     <li>
-                        <input name="verifycode" type="text"  value="" class="loginverifycode" placeholder="请输入验证码" lay-verify="required|number">
+                        <input name="verifycode" type="text"  value="" class="loginverifycode" placeholder="请输入验证码" lay-verify="required">
 
-                        <img id="nubImg" title="数字验证码" src="/Login/NumberVerifyCode?random=" alt="vcode" onclick="refresh()" style="cursor:pointer;" />                     
+                        <img id="nubImg" title="数字验证码" src="/Login/NumberVerifyCode?random=" alt="vcode" onclick="refresh()" style="cursor:pointer;" />                   
                         
                     </li>
                     <li>
                         <button class="layui-btn loginbtn" lay-submit lay-filter="login">登录</button>
                      
-                        <input type="checkbox" name="chkUsername" title="记住用户名密码" lay-skin="primary">
+                        @*<input type="checkbox" name="chkUsername" title="记住用户名密码" lay-skin="primary">*@
 
                     </li>
                 </ul>

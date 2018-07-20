@@ -1,5 +1,6 @@
 ﻿using System;
 using Infrastructure.Cache;
+using Microsoft.AspNetCore.Http;
 using Repository.Domain;
 using Repository.Interface;
 
@@ -25,7 +26,21 @@ namespace App.SSO
             var result = new LoginResult();
             try
             {
-                
+
+                // 验证码对错验证
+               
+
+                //if (!checkCodeInput.Equals(checkCode))
+                //{
+                //    ////设置报错消息param
+                //    //string[] param = { "验证码" };
+                //    //SetError(userID, context.Response, "txtCheckCode", "Common", "E003", "验证码错误");
+                //    //return;
+                //}
+
+
+
+
             }
             catch (Exception ex)
             {
