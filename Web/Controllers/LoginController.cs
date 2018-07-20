@@ -30,8 +30,8 @@ namespace Web.Controllers
         /// <returns></returns>
         public FileContentResult NumberVerifyCode()
         {
-            string code = VerifyCodeHelper.GetSingleObj().CreateVerifyCode(VerifyCodeHelper.VerifyCodeType.NumberVerifyCode);
-            byte[] codeImage = VerifyCodeHelper.GetSingleObj().CreateByteByImgVerifyCode(code, 100, 40);
+            var code = VerifyCodeHelper.GetSingleObj().CreateVerifyCode(VerifyCodeHelper.VerifyCodeType.NumberVerifyCode);
+            var codeImage = VerifyCodeHelper.GetSingleObj().CreateByteByImgVerifyCode(code, 70, 36);
             return File(codeImage, @"image/jpeg");
         }
 
