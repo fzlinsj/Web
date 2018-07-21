@@ -1,6 +1,7 @@
 ﻿using System;
 using App;
 using Autofac.Extensions.DependencyInjection;
+using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,8 +41,7 @@ namespace Web
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMemoryCache();
             services.AddOptions();
-            services.AddDbContext<XgossContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("XgossContext")));
+            services.AddDbContext<XgossContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("XgossContext")));
             //映射配置文件
             services.Configure<AppSetting>(Configuration.GetSection("AppSetting"));
 

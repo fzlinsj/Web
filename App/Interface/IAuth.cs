@@ -25,15 +25,6 @@ namespace App.Interface
         /// <param name="pwd">密码</param>
         /// <returns></returns>
         LoginResult Login(string appKey, string username, string pwd);
-
-        /// <summary>
-        /// 登录接口
-        /// </summary>
-        /// <param name="appKey">登录的应用appkey</param>
-        /// <param name="username">用户名</param>
-        /// <param name="pwd">密码</param>
-        /// <returns></returns>
-        LoginResult Login(string appKey, string username, string pwd,string checkcode);
         /// <summary>
         /// 退出登录
         /// </summary>

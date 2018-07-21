@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using App.AuthStrategies;
 using App.Interface;
+using Infrastructure;
 using Infrastructure.Cache;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace App.SSO
 {
@@ -19,15 +21,19 @@ namespace App.SSO
         private LoginParse _loginParse;
         private ICacheContext _cacheContext;
 
+        private IOptions<AppSetting> _options;
+
         public LocalAuth(IHttpContextAccessor httpContextAccessor
             , AuthContextFactory app
             , LoginParse loginParse
-            , ICacheContext cacheContext)
+            , ICacheContext cacheContext
+            , IOptions<AppSetting> options)
         {
             _httpContextAccessor = httpContextAccessor;
             _app = app;
             _loginParse = loginParse;
             _cacheContext = cacheContext;
+            _options = options;
         }
 
         private string GetToken()
@@ -105,32 +111,16 @@ namespace App.SSO
         /// <returns>System.String.</returns>
         public LoginResult Login(string appKey, string username, string pwd)
         {
+            //var ip = _httpContextAccessor.HttpContext.Request.HttpContext.Connection.LocalIpAddress.MapToIPv4().ToString();
+
+            //var userAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
+
             return _loginParse.Do(new PassportLoginRequest
             {
                 AppKey = appKey,
                 Account = username,
                 Password = pwd
             });
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="appKey">应用程序key.</param>
-        /// <param name="username">用户名</param>
-        /// <param name="pwd">密码</param>
-        /// <param name="checkcode">校验码</param>
-        /// <returns></returns>
-        public LoginResult Login(string appKey,string username, string pwd, string checkcode)
-        {
-            return _loginParse.Do(new PassportLoginRequest
-            {
-                AppKey = appKey,
-                Account = username,
-                Password = pwd,
-                CheckCode = checkcode
-            });
-
         }
 
         /// <summary>

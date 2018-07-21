@@ -1,8 +1,10 @@
 ﻿using System;
+using App;
 using App.Interface;
 using Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Web.Controllers
 {
@@ -38,8 +40,6 @@ namespace Web.Controllers
                 throw new Exception(ex.ToString());
             }
 
-            
-
             var codeImage = VerifyCodeHelper.GetSingleObj().CreateByteByImgVerifyCode(code, 70, 36);
             return File(codeImage, @"image/jpeg");
         }
@@ -62,7 +62,7 @@ namespace Web.Controllers
             {
                 try
                 {
-                    var result = _authUtil.Login("", username, password, verifycode);
+                    var result = _authUtil.Login("", username, password);
                     if (result.Code == 200)
                     {
                         Response.Cookies.Append("Token", result.Token);
