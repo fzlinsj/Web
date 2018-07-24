@@ -12,13 +12,13 @@ namespace App.SSO
     {
 
         //这个地方使用IRepository<User> 而不使用UserManagerApp是防止循环依赖
-        public IRepository<UserInfo> _app;
+        public IRepository<StructTable> _app;
         private ICacheContext _cacheContext;
         private AppInfoService _appInfoService;
         private IOptions<AppSetting> _options;
         private IHttpContextAccessor _httpContextAccessor;
 
-        public LoginParse(AppInfoService infoService, ICacheContext cacheContext, IRepository<UserInfo> userApp,  IOptions<AppSetting> options, IHttpContextAccessor httpContextAccessor)
+        public LoginParse(AppInfoService infoService, ICacheContext cacheContext, IRepository<StructTable> userApp,  IOptions<AppSetting> options, IHttpContextAccessor httpContextAccessor)
         {
             _appInfoService = infoService;
             _cacheContext = cacheContext;
@@ -36,14 +36,14 @@ namespace App.SSO
 
                 // 验证码对错验证
 
-                var ip = _httpContextAccessor.HttpContext.Request.HttpContext.Connection.LocalIpAddress.MapToIPv4().ToString();
+                //var ip = _httpContextAccessor.HttpContext.Request.HttpContext.Connection.LocalIpAddress.MapToIPv4().ToString();
 
-                var userAgent = _httpContextAccessor.HttpContext.Request.Headers["HeaderUserAgent"];
+                //var userAgent = _httpContextAccessor.HttpContext.Request.Headers["HeaderUserAgent"];
 
-                if (ip != "" && userAgent != "")
-                {
+                //if (ip != "" && userAgent != "")
+                //{
 
-                }
+                //}
 
 
                 //if (!checkCodeInput.Equals(checkCode))
@@ -53,6 +53,13 @@ namespace App.SSO
                 //    //SetError(userID, context.Response, "txtCheckCode", "Common", "E003", "验证码错误");
                 //    //return;
                 //}
+
+                var userInfo = _app.FindSingle(u => u.Cname == "用户编号");
+
+                if (userInfo != null)
+                {
+
+                }
 
 
 

@@ -9,18 +9,21 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
 {
     /// <summary>
-	/// 员工表
-	/// </summary>
+    /// 员工表
+    /// </summary>
+    [Table("officedba.UserInfo")]
     public partial class UserInfo : Entity
     {
         public UserInfo()
         {
           this.CompanyCD= string.Empty;
+          this.UserID = string.Empty;
           this.Password= string.Empty;
           this.UsedStatus= string.Empty;
           this.LockFlag= string.Empty;
@@ -38,6 +41,9 @@ namespace Repository.Domain
 	    /// 
 	    /// </summary>
         public string CompanyCD { get; set; }
+
+        public string UserID { get; set; }
+
         /// <summary>
 	    /// 
 	    /// </summary>

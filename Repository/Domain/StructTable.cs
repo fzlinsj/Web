@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
@@ -16,6 +17,8 @@ namespace Repository.Domain
     /// <summary>
 	/// 
 	/// </summary>
+	/// 
+	[Table("defdba.StructTable")]
     public partial class StructTable : Entity
     {
         public StructTable()

@@ -18,6 +18,8 @@ namespace Repository
             : base(options)
         { }
 
+        public virtual DbSet<Application> Applications { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<CustomModule> CustomModules { get; set; }
         public virtual DbSet<CustomTable> CustomTables { get; set; }
         public virtual DbSet<ModuleTable> ModuleTables { get; set; }
