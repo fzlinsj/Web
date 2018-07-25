@@ -12,13 +12,13 @@ namespace App.SSO
     {
 
         //这个地方使用IRepository<User> 而不使用UserManagerApp是防止循环依赖
-        public IRepository<StructTable> _app;
+        public IRepository<UserInfo> _app;
         private ICacheContext _cacheContext;
         private AppInfoService _appInfoService;
         private IOptions<AppSetting> _options;
         private IHttpContextAccessor _httpContextAccessor;
 
-        public LoginParse(AppInfoService infoService, ICacheContext cacheContext, IRepository<StructTable> userApp,  IOptions<AppSetting> options, IHttpContextAccessor httpContextAccessor)
+        public LoginParse(AppInfoService infoService, ICacheContext cacheContext, IRepository<UserInfo> userApp,  IOptions<AppSetting> options, IHttpContextAccessor httpContextAccessor)
         {
             _appInfoService = infoService;
             _cacheContext = cacheContext;
@@ -54,7 +54,7 @@ namespace App.SSO
                 //    //return;
                 //}
 
-                var userInfo = _app.FindSingle(u => u.Cname == "用户编号");
+                var userInfo = _app.FindSingle(u => u.Id == "yangyang");
 
                 if (userInfo != null)
                 {
