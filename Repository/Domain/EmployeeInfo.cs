@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
@@ -16,7 +17,8 @@ namespace Repository.Domain
     /// <summary>
 	/// 员工信息表
 	/// </summary>
-    public partial class EmployeeInfo : Entity
+    [Table("EmployeeInfo")]
+    public partial class EmployeeInfo: Entity
     {
         public EmployeeInfo()
         {
@@ -140,7 +142,7 @@ namespace Repository.Domain
         /// <summary>
 	    /// 
 	    /// </summary>
-        public int? QuarterID { get; set; }
+        public string QuarterID { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>
@@ -268,7 +270,7 @@ namespace Repository.Domain
         /// <summary>
 	    /// 
 	    /// </summary>
-        public int? DeptID { get; set; }
+        public string DeptID { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>

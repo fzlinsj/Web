@@ -11,7 +11,7 @@ namespace Repository
 {
     public class BaseRepository<T> : IRepository<T> where T : Entity
     {
-        private XgossContext _context;
+        public XgossContext _context;
 
         public BaseRepository(XgossContext context)
         {

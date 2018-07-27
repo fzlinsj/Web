@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using Infrastructure;
 using Infrastructure.Cache;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Repository;
 using Repository.Domain;
 using Repository.Interface;
 
@@ -12,19 +14,21 @@ namespace App.SSO
     {
 
         //这个地方使用IRepository<User> 而不使用UserManagerApp是防止循环依赖
-        public IRepository<UserInfo> _app;
+        //public IRepository<UserInfo> _app;
+        public LoginApp _loginApp;
         private ICacheContext _cacheContext;
         private AppInfoService _appInfoService;
         private IOptions<AppSetting> _options;
         private IHttpContextAccessor _httpContextAccessor;
 
-        public LoginParse(AppInfoService infoService, ICacheContext cacheContext, IRepository<UserInfo> userApp,  IOptions<AppSetting> options, IHttpContextAccessor httpContextAccessor)
+        public LoginParse(AppInfoService infoService, ICacheContext cacheContext, IOptions<AppSetting> options, IHttpContextAccessor httpContextAccessor,LoginApp app)
         {
             _appInfoService = infoService;
             _cacheContext = cacheContext;
-            _app = userApp;
+            //_app = userApp;
             _options = options;
             _httpContextAccessor = httpContextAccessor;
+            _loginApp = app;
         }
 
         public LoginResult Do(PassportLoginRequest model)
@@ -54,12 +58,30 @@ namespace App.SSO
                 //    //return;
                 //}
 
-                var userInfo = _app.FindSingle(u => u.Id == "yangyang");
 
-                if (userInfo != null)
-                {
 
-                }
+                var data=_loginApp.GetUserInfoByUserId("yangyang");
+
+                Console.WriteLine(JsonHelper.Instance.Serialize(data));
+
+                //var categories = _app.FindSingle<UserInfo>(null);
+
+
+                //var userInfo = _app.FindSingle(u => u.Id == model.Account);
+
+
+                //var query = from category in categories
+                //    join ct in UnitWork.Find<CategoryType>(null) on category.TypeId equals ct.Id
+                //        into tmp
+                //    from ct in tmp.DefaultIfEmpty()
+                //    select new
+                //    {
+                //        category.Name,
+                //        category.Id,
+                //        category.TypeId,
+                //        TypeName = ct.Name,
+                //        category.Description
+                //    };
 
 
 

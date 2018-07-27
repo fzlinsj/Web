@@ -9,13 +9,15 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
 {
     /// <summary>
-	/// 
-	/// </summary>
+    /// 
+    /// </summary>
+    [Table("DeptQuarter")]
     public partial class DeptQuarter : Entity
     {
         public DeptQuarter()

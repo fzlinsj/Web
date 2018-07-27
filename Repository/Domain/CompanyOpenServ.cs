@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
@@ -16,6 +17,7 @@ namespace Repository.Domain
     /// <summary>
 	/// 企业服务开通表
 	/// </summary>
+    [Table("CompanyOpenServs")]
     public partial class CompanyOpenServ : Entity
     {
         public CompanyOpenServ()

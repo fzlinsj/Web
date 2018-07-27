@@ -48,7 +48,7 @@ namespace Repository.Domain
         /// <summary>
 	    /// 
 	    /// </summary>
-        public int? EmployeeID { get; set; }
+        public string EmployeeID { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>

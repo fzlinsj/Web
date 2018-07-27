@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Repository.Core;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Repository.Core;
 using Repository.Interface;
 using Z.EntityFramework.Plus;
 
@@ -43,7 +41,10 @@ namespace Repository
         /// </summary>
         public T FindSingle<T>(Expression<Func<T, bool>> exp) where T : class
         {
+
             return _context.Set<T>().AsNoTracking().FirstOrDefault(exp);
+
+            
         }
 
         /// <summary>
