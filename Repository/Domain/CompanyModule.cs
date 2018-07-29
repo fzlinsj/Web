@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
@@ -16,12 +17,13 @@ namespace Repository.Domain
     /// <summary>
 	/// 
 	/// </summary>
+    [Table("CompanyModule")]
     public partial class CompanyModule : Entity
     {
         public CompanyModule()
         {
           this.CompanyCD= string.Empty;
-          this.ModuleID= 0;
+          this.ModuleID= string.Empty;
           this.ModifiedDate= DateTime.Now;
           this.ModifiedUserID= string.Empty;
         }
@@ -33,7 +35,7 @@ namespace Repository.Domain
         /// <summary>
 	    /// 
 	    /// </summary>
-        public int ModuleID { get; set; }
+        public string ModuleID { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>

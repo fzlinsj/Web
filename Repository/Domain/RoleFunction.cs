@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
@@ -16,14 +17,15 @@ namespace Repository.Domain
     /// <summary>
 	/// 
 	/// </summary>
+    [Table("RoleFunction")]
     public partial class RoleFunction : Entity
     {
         public RoleFunction()
         {
           this.CompanyCD= string.Empty;
           this.RoleID= 0;
-          this.ModuleID= 0;
-          this.ModifiedDate= DateTime.Now;
+          this.ModuleID= string.Empty;
+            this.ModifiedDate= DateTime.Now;
           this.ModifiedUserID= string.Empty;
           this.Remark= string.Empty;
         }
@@ -39,7 +41,7 @@ namespace Repository.Domain
         /// <summary>
 	    /// 
 	    /// </summary>
-        public int ModuleID { get; set; }
+        public string ModuleID { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>

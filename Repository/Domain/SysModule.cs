@@ -9,13 +9,15 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
 {
     /// <summary>
-	/// 系统模块表
-	/// </summary>
+    /// 系统模块表
+    /// </summary>
+    [Table("SysModule")]
     public partial class SysModule : Entity
     {
         public SysModule()
@@ -26,6 +28,7 @@ namespace Repository.Domain
           this.PropertyValue= string.Empty;
           this.ImgPath= string.Empty;
           this.DefaultPage= string.Empty;
+          this.ParentID = string.Empty;
         }
 
         /// <summary>
@@ -35,7 +38,7 @@ namespace Repository.Domain
         /// <summary>
 	    /// 父模块ID
 	    /// </summary>
-        public int? ParentID { get; set; }
+        public string ParentID { get; set; }
         /// <summary>
         /// 模块类型
         ///A-表示应用系统

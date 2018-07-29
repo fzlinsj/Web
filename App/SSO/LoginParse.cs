@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
+using App.Common;
 using Infrastructure;
 using Infrastructure.Cache;
 using Microsoft.AspNetCore.Http;
@@ -159,6 +161,11 @@ namespace App.SSO
                 string IsRoot = (string)pdId.GetValue(data.data);
 
                 var userRole = _appUserRole.FindSingle(u => u.UserID == model.Account && u.CompanyCD == companyCD);
+
+                //只读取顶级菜单信息
+                //全部菜单信息放到LEFT.CS内读取并缓存
+                //获得用户菜单信息
+                //DataTable menuInfo = SafeUtil.InitMenuData(userID, companyCD, "len(C.ModuleID) <= 2");
 
 
 
