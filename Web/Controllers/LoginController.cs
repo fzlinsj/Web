@@ -51,14 +51,14 @@ namespace Web.Controllers
 
             var checkCode=HttpContext.Session.GetString("CheckCode");
 
-            //if (!checkCode.Equals(verifycode))
-            //{
+            if (!checkCode.Equals(verifycode))
+            {
 
-            //    resp.Code = 500;
-            //    resp.Message = "验证码不正确!";
+                resp.Code = 500;
+                resp.Message = "验证码不正确!";
 
-            //}
-            //else
+            }
+            else
             {
                 try
                 {

@@ -30,7 +30,18 @@ namespace App
                     A.EmployeeID,
                     A.LockFlag,
                     A.LastLoginTime,
-                    B.Id
+                    CompanyCD=B.Id,
+                    EnableUSBKEYLOGIN=B.EnableUSBKEYLOGIN,
+                    CompanyOpenDate=B.OpenDate,
+                    CompanyCloseDate=B.CloseDate,
+                    UserOpenDate=A.OpenDate,
+                    UserCloseDate=A.CloseDate,
+                    DeptID =C.DeptID,
+                    EmployeeNum=C.EmployeeNum,
+                    EmployeeName=C.EmployeeName,
+                    QuarterID=string.IsNullOrEmpty(C.QuarterID)?"":C.QuarterID,
+                    DeptName= string.IsNullOrEmpty(D.DeptName)?"":D.DeptName,
+
 
                 };
 

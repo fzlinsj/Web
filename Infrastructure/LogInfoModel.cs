@@ -5,10 +5,8 @@
  ***********************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Business.Common
+namespace Infrastructure
 {
     /// <summary>
     /// 类名：LogInfoModel

@@ -6,9 +6,7 @@
  * 版    本： 0.5.0
  ***********************************************/
 
-using Infrastructure;
-
-namespace Business.Common
+namespace Infrastructure
 {
     /// <summary>
     /// 类名：LogInfo

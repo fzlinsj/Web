@@ -115,6 +115,9 @@ namespace App.SSO
 
             //var userAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
 
+
+            
+
             return _loginParse.Do(new PassportLoginRequest
             {
                 AppKey = appKey,

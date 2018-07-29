@@ -25,9 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Busine
 		{65A0BCBB-AB80-4BC6-ACBD-0F1F42BDB0CB} = {65A0BCBB-AB80-4BC6-ACBD-0F1F42BDB0CB}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{F92E2780-941E-49BC-9746-1EEA6182B0B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{F92E2780-941E-49BC-9746-1EEA6182B0B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{144A4D41-E762-4A72-985C-267A751B5CD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{144A4D41-E762-4A72-985C-267A751B5CD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

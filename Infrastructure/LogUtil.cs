@@ -10,10 +10,8 @@
 using System;
 using System.IO;
 using System.Text;
-using Infrastructure;
-using Microsoft.Extensions.Options;
 
-namespace Business.Common
+namespace Infrastructure
 {
     /// <summary>
     /// 类名：LogUtil
