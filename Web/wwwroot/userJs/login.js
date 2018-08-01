@@ -101,9 +101,12 @@ layui.config({
         $.getJSON("/Login/Login"
             , data.field
             ,function(data) {
-                if (data.Code == 200) {
+                if (data.Code == 200) 
+                {
                     window.location.href = "/Home/Index";
-                } else {
+                }
+                else
+                {
                     layer.msg(data.Message);
                 }
             });

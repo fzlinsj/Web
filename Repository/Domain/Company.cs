@@ -9,13 +9,15 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
 {
     /// <summary>
-	/// 企业基本信息表
-	/// </summary>
+    /// 企业基本信息表
+    /// </summary>
+    [Table("Company")]
     public partial class Company : Entity
     {
         public Company()

@@ -34,12 +34,12 @@ namespace Infrastructure
         //用户公司名称
         private string _CompanyName = string.Empty;
         //用户部门ID
-        private int _DepartmentID;
+        private string _DepartmentID;
         private string _DepartmentName;
         //角色列表
         private int[] _Role;
         //用户人员编号
-        private int _employeeID;
+        private string _employeeID;
         //用户员工名称
         private string _employeename;
         //用户工号
@@ -214,7 +214,7 @@ namespace Infrastructure
             }
         }
 
-        public int EmployeeID
+        public string EmployeeID
         {
             get
             {
@@ -286,7 +286,7 @@ namespace Infrastructure
             }
         }
 
-        public int DeptID
+        public string DeptID
         {
             get
             {

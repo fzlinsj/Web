@@ -123,26 +123,61 @@ namespace Infrastructure
         }
         #endregion
 
-        public static DataTable ToDataTable<T>(IEnumerable<T> collection)
+        //public static DataTable ToDataTable<T>(IEnumerable<T> collection)
+        //{
+        //    var props = typeof(T).GetProperties();
+        //    var dt = new DataTable();
+        //    dt.Columns.AddRange(props.Select(p => new DataColumn(p.Name, p.PropertyType)).ToArray());
+        //    if (collection.Count() > 0)
+        //    {
+        //        for (int i = 0; i < collection.Count(); i++)
+        //        {
+        //            ArrayList tempList = new ArrayList();
+        //            foreach (PropertyInfo pi in props)
+        //            {
+        //                object obj = pi.GetValue(collection.ElementAt(i), null);
+        //                tempList.Add(obj);
+        //            }
+        //            object[] array = tempList.ToArray();
+        //            dt.LoadDataRow(array, true);
+        //        }
+        //    }
+        //    return dt;
+        //}
+
+        /// <summary>
+        /// 讲list集合转换成datatable
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static DataTable ToDataTable(IList list)
         {
-            var props = typeof(T).GetProperties();
-            var dt = new DataTable();
-            dt.Columns.AddRange(props.Select(p => new DataColumn(p.Name, p.PropertyType)).ToArray());
-            if (collection.Count() > 0)
+            var result = new DataTable();
+            if (list.Count <= 0) return result;
+            var propertys = list[0].GetType().GetProperties();
+            foreach (var pi in propertys)
             {
-                for (int i = 0; i < collection.Count(); i++)
+                //获取类型
+                var colType = pi.PropertyType;
+                //当类型为Nullable<>时
+                if ((colType.IsGenericType) && (colType.GetGenericTypeDefinition() == typeof(Nullable<>)))
                 {
-                    ArrayList tempList = new ArrayList();
-                    foreach (PropertyInfo pi in props)
-                    {
-                        object obj = pi.GetValue(collection.ElementAt(i), null);
-                        tempList.Add(obj);
-                    }
-                    object[] array = tempList.ToArray();
-                    dt.LoadDataRow(array, true);
+                    colType = colType.GetGenericArguments()[0];
                 }
+                result.Columns.Add(pi.Name, colType);
             }
-            return dt;
+            foreach (var t in list)
+            {
+                var tempList = new ArrayList();
+                foreach (var pi in propertys)
+                {
+                    var obj = pi.GetValue(t, null);
+                    tempList.Add(obj);
+                }
+                var array = tempList.ToArray();
+                result.LoadDataRow(array, true);
+            }
+            return result;
         }
     }
 }

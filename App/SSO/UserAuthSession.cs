@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrastructure;
 
 namespace App.SSO
 {
@@ -14,6 +15,7 @@ namespace App.SSO
         /// </summary>
         public string Account { get; set; }
 
+
         /// <summary>
         /// 用户名
         /// </summary>
@@ -22,5 +24,7 @@ namespace App.SSO
         public string IpAddress { get; set; }
 
         public DateTime CreateTime { get; set; }
+
+        public UserInfoUtil UserInfo { get; set; }
     }
 }

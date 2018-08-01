@@ -2,12 +2,11 @@
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using App.Common;
+using App.SystemManager;
 using Infrastructure;
 using Infrastructure.Cache;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Repository;
 using Repository.Domain;
 using Repository.Interface;
 
@@ -18,11 +17,16 @@ namespace App.SSO
 
         //这个地方使用IRepository<User> 而不使用UserManagerApp是防止循环依赖
         public IRepository<UserRole> _appUserRole;
+        public IRepository<Company> _companyApp;
         public LoginApp _loginApp;
+        public CommonUtilDbApp _commonApp;
         private ICacheContext _cacheContext;
         private AppInfoService _appInfoService;
         private IOptions<AppSetting> _options;
         private IHttpContextAccessor _httpContextAccessor;
+        private ParameterSettingApp _parameterSettingApp;
+        private IRepository<UserInfo> _userInfoApp;
+
 
         /// <summary>
         /// 用户已经登陆标志
@@ -34,7 +38,8 @@ namespace App.SSO
         private const string HAD_LOCKED = "1";
 
         public LoginParse(AppInfoService infoService, ICacheContext cacheContext, IOptions<AppSetting> options, 
-            IHttpContextAccessor httpContextAccessor,LoginApp app, IRepository<UserRole> userRoleApp)
+            IHttpContextAccessor httpContextAccessor,LoginApp app, IRepository<UserRole> userRoleApp, 
+            CommonUtilDbApp commonApp, IRepository<Company> companyApp,ParameterSettingApp parameterSettingApp, IRepository<UserInfo> userInfo)
         {
             _appInfoService = infoService;
             _cacheContext = cacheContext;
@@ -42,15 +47,66 @@ namespace App.SSO
             _options = options;
             _httpContextAccessor = httpContextAccessor;
             _loginApp = app;
+            _commonApp = commonApp;
+            _companyApp = companyApp;
+            _parameterSettingApp = parameterSettingApp;
+            _userInfoApp = userInfo;
         }
+
+        #region 获取部门角色信息
+
+        /// <summary>
+        /// 获取部门角色信息
+        /// </summary>
+        /// <param name="userID">用户名</param>
+        /// <param name="companyCD">公司代码</param>
+        /// <returns>DataTable 部门角色信息</returns>
+        public  int[] GetRoleInfo(string userID, string companyCD)
+        {
+            //定义返回的角色数组
+            int[] role = new int[0];
+
+            try
+            {
+                //获取角色信息
+                var roleList = _appUserRole.Find(u => u.UserID == userID && u.CompanyCD == companyCD).ToList();
+                DataTable dtRole = CommonHelper.ToDataTable(roleList);
+                //当角色存在的时候，设置角色到数组中
+                if (dtRole != null && dtRole.Rows.Count > 0)
+                {
+                    //获取角色个数
+                    int roleCount = dtRole.Rows.Count;
+                    role = new int[roleCount];
+                    //遍历所有角色，并设值
+                    for (int i = 0; i < roleCount; i++)
+                    {
+                        //设置角色
+                        role[i] = (int)dtRole.Rows[0]["RoleID"];
+                    }
+                }
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+               
+            }
+           
+            return role;
+        }
+
+        #endregion
 
         public LoginResult Do(PassportLoginRequest model)
         {
             var result = new LoginResult {Code = 500};
             try
             {
+
+               
+
                 //判断是否已经登录
-               var userAuthSession= _cacheContext.Get<UserAuthSession>(model.Account);
+                var userAuthSession = _cacheContext.Get<UserAuthSession>(model.Account);
 
                 if (userAuthSession != null)
                 {
@@ -61,8 +117,19 @@ namespace App.SSO
 
                 }
 
+                //Stopwatch watch = new Stopwatch();
+                //watch.Start();
 
-                var data=_loginApp.GetUserInfoByUserId(model.Account);
+                //var testInfo = _userInfoApp.FindSingle(u => u.Id == model.Account);
+
+                //watch.Stop();
+                //result.Code = 200;
+
+                //result.Message = string.Format("用时{0}毫秒", watch.ElapsedMilliseconds);
+
+                //return result;
+
+                var data = _loginApp.GetUserInfoByUserId(model.Account);
 
                 //用户名 不存在
                 if (data == null || data.data ==null)
@@ -152,22 +219,129 @@ namespace App.SSO
 
                 //获得用户公司代码
                 pdId = pdc.Find("CompanyCD", true);
-                string companyCD = (string)pdId.GetValue(data.data);
+                var companyCD = (string)pdId.GetValue(data.data);
                 //获得用户姓名
                 pdId = pdc.Find("UserName", true);
-                string userName = (string)pdId.GetValue(data.data);
+                var userName = (string)pdId.GetValue(data.data);
                 //获取是否超管信息
                 pdId = pdc.Find("IsRoot", true);
-                string IsRoot = (string)pdId.GetValue(data.data);
+                var IsRoot = (string)pdId.GetValue(data.data);
 
-                var userRole = _appUserRole.FindSingle(u => u.UserID == model.Account && u.CompanyCD == companyCD);
+                var role = GetRoleInfo(model.Account, companyCD);
 
                 //只读取顶级菜单信息
                 //全部菜单信息放到LEFT.CS内读取并缓存
                 //获得用户菜单信息
-                //DataTable menuInfo = SafeUtil.InitMenuData(userID, companyCD, "len(C.ModuleID) <= 2");
+                var menuInfo = _commonApp.GetMenuData(model.Account, companyCD, true);
+
+                //获得用户页面操作信息
+                DataTable authoInfo = null;//SafeUtil.InitPageAuthority(userID, companyCD);
+
+                //设置Session中用户信息
+                var userInfo = new UserInfoUtil();
+
+                var companyInfo = _companyApp.FindSingle(u => u.Id == companyCD);
+
+                if (companyInfo != null)
+                {
+                    userInfo.CompanyName = companyInfo.NameCn;
+                }
+
+                //设置用户ID
+                userInfo.UserID = model.Account;
+                //设置用户姓名
+                userInfo.UserName = userName;
+                //设置超管信息
+                userInfo.IsRoot = IsRoot;
+                //设置用户公司代码
+                userInfo.CompanyCD = companyCD;
+
+                pdId = pdc.Find("EmployeeID", true);
+                //获取人员编号
+                string employeeID = (string)pdId.GetValue(data.data);
+
+                //人员ID设置的场合，设置人员ID
+                if (!string.IsNullOrEmpty(employeeID))
+                {
+                    //设置人员ID 
+                    userInfo.EmployeeID =employeeID;
+                    //设置人员名
+                    pdId = pdc.Find("EmployeeName", true);
+                    userInfo.EmployeeName = (string)pdId.GetValue(data.data);
+                    //设置人员工号
+                    pdId = pdc.Find("EmployeeNum", true);
+                    userInfo.EmployeeNum = (string)pdId.GetValue(data.data);
+                    //获取部门ID
+                    pdId = pdc.Find("DeptID", true);
+                    string deptID = (string)pdId.GetValue(data.data);
+                    //部门ID设置的场合，设置部门ID
+                    if (!string.IsNullOrEmpty(deptID))
+                    {
+                        //设置部门ID
+                        userInfo.DeptID =deptID;
+                    }
+                    //部门名称
+                    pdId = pdc.Find("DeptName", true);
+                    userInfo.DeptName = (string)pdId.GetValue(data.data);
+                }
+
+                //设置角色列表
+                userInfo.Role = role;
+                //设置用户菜单信息
+                userInfo.MenuInfo = menuInfo;
+                //设置用户页面操作信息
+                userInfo.AuthorityInfo = authoInfo;
+
+                //出入库价格是否显示
+                userInfo.IsDisplayPrice = _parameterSettingApp.Get(userInfo.CompanyCD, "1", true);
+
+                //是否启用条码
+                userInfo.IsBarCode = _parameterSettingApp.Get(userInfo.CompanyCD, "2", true);
+
+                //是否启用多计量单位
+                userInfo.IsMoreUnit = _parameterSettingApp.Get(userInfo.CompanyCD, "3", false);
+
+                //是否启用自动生成凭证
+                userInfo.IsVoucher = _parameterSettingApp.Get(userInfo.CompanyCD, "6", false);
+
+                //是否启用自动审核登帐
+                userInfo.IsApply = _parameterSettingApp.Get(userInfo.CompanyCD, "7", false);
+                //是否启用超订单发货
+                userInfo.IsOverOrder = _parameterSettingApp.Get(userInfo.CompanyCD, "8", false);
+
+                //允许出入库价格为零
+                userInfo.IsZero = _parameterSettingApp.Get(userInfo.CompanyCD, "9", false);
+
+                //小数位数
+                userInfo.SelPoint = "2";//默认 
+                var dtPoint = _parameterSettingApp.GetPoint(userInfo.CompanyCD, "5");
+                if (dtPoint?.Rows.Count > 0)
+                {
+                    userInfo.SelPoint = dtPoint.Rows[0]["SelPoint"].ToString();
+                }
+
+                //var getUserInfo = _userInfoApp.FindSingle(u => u.CompanyCD == companyCD&&u.Id== model.Account);
+                //getUserInfo.LastLoginTime=DateTime.Now;
+
+                _userInfoApp.Update(u => u.CompanyCD == companyCD&& u.Id == model.Account, u => new UserInfo { LastLoginTime = DateTime.Now });
 
 
+                var currentSession = new UserAuthSession
+                {
+                    Account = model.Account,
+                    Name = userInfo.UserName,
+                    Token = Guid.NewGuid().ToString().GetHashCode().ToString("x"),
+                    AppKey = model.AppKey,
+                    CreateTime = DateTime.Now,
+                    UserInfo = userInfo
+                    //    , IpAddress = HttpContext.Current.Request.UserHostAddress
+                };
+
+                //创建Session
+                _cacheContext.Set(currentSession.Token, currentSession, DateTime.Now.AddDays(10));
+
+                result.Code = 200;
+                result.Token = currentSession.Token;
 
 
 

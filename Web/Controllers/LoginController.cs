@@ -51,7 +51,7 @@ namespace Web.Controllers
 
             var checkCode=HttpContext.Session.GetString("CheckCode");
 
-            if (!checkCode.Equals(verifycode))
+            if (checkCode==null||!checkCode.Equals(verifycode))
             {
 
                 resp.Code = 500;
