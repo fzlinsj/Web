@@ -16,7 +16,6 @@ layui.config({
             $("#username").html(data);
             $("#usernametop").html(data);
         });
-
 	//更换皮肤
 	function skins(){
 		var skin = window.sessionStorage.getItem("skin");
@@ -216,7 +215,8 @@ layui.config({
 	})
 
 	//公告层
-	function showNotice(){
+    function showNotice() {
+     
 		layer.open({
 	        type: 1,
 	        title: "系统公告",
@@ -246,11 +246,13 @@ layui.config({
 	    });
 	}
 	//判断是否处于锁屏状态(如果关闭以后则未关闭浏览器之前不再显示)
-	if(window.sessionStorage.getItem("lockcms") != "true" && window.sessionStorage.getItem("showNotice") != "true"){
-		showNotice();
+    if (window.sessionStorage.getItem("lockcms") != "true" && window.sessionStorage.getItem("showNotice") != "true")
+    {
+		//showNotice();
 	}
-	$(".showNotice").on("click",function(){
-		showNotice();
+    $(".showNotice").on("click", function ()
+    {
+		//showNotice();
 	})
 
 	//刷新后还原打开的窗口
@@ -357,7 +359,7 @@ function addTab(_this){
 	tab.tabAdd(_this);
 }
 
-//捐赠弹窗
+捐赠弹窗
 function donation(){
 	layer.tab({
 		area : ['260px', '367px'],

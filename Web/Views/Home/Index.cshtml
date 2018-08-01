@@ -1,94 +1,132 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>OpenAuth.Core</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
+    <link rel="stylesheet" href="/css/main.css" media="all" />
+</head>
+<body class="main_body">
+    <div class="layui-layout layui-layout-admin">
+        <!-- 顶部 -->
+        <div class="layui-header header">
+            <div class="layui-main">
+                <a href="#" class="logo">OpenAuth.Core</a>
+                <!-- 显示/隐藏菜单 -->
+                <a href="javascript:;" class="iconfont hideMenu icon-menu1"></a>
+                <!-- 搜索 -->
+                <div class="layui-form component">
+                    <select name="modules" lay-verify="required" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="1">layer</option>
+                        <option value="2">form</option>
+                        <option value="3">layim</option>
+                    </select>
+                    <i class="layui-icon">&#xe615;</i>
+                </div>
+                <!-- 天气信息 -->
+                <div class="weather" pc>
+                    <div id="tp-weather-widget"></div>
+                    <script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+                    <script>
+tpwidget("init", {
+					    "flavor": "slim",
+					    "location": "WX4FBXXFKE4F",
+					    "geolocation": "enabled",
+					    "language": "zh-chs",
+					    "unit": "c",
+					    "theme": "chameleon",
+					    "container": "tp-weather-widget",
+					    "bubble": "disabled",
+					    "alarmType": "badge",
+					    "color": "#FFFFFF",
+					    "uid": "U9EC08A15F",
+					    "hash": "039da28f5581f4bcb5c799fb4cdfb673"
+					});
+					tpwidget("show");</script>
+                </div>
+                <!-- 顶部右侧菜单 -->
+                <ul class="layui-nav top_menu">
+                    <li class="layui-nav-item showNotice" id="showNotice" pc>
+                        <a href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统公告</cite></a>
+                    </li>
+                    @*<li class="layui-nav-item" mobile>
+                        <a href="javascript:;" class="mobileAddTab" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>设置</cite></a>
+                    </li>
+                    <li class="layui-nav-item" mobile>
+                        <a href="page/login/login.html" class="signOut"><i class="iconfont icon-loginout"></i> 退出</a>
+                    </li>*@
+                    <li class="layui-nav-item lockcms" pc>
+                        <a href="javascript:;"><i class="iconfont icon-lock1"></i><cite>锁屏</cite></a>
+                    </li>
+                    <li class="layui-nav-item" pc>
+                        <a href="javascript:;">
+                            <img src="/images/face.jpg" class="layui-circle" width="35" height="35">
+                            <cite id="usernametop">System</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
+                            <dd><a href="javascript:;" class="changeSkin"><i class="iconfont icon-huanfu"></i><cite>更换皮肤</cite></a></dd>
+                            <dd><a href="/Login/Logout" class="signOut"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 左侧导航 -->
+        <div class="layui-side layui-bg-black">
+            <div class="user-photo">
+                <a class="img" title="我的头像"><img src="/images/face.jpg"></a>
+                <p>你好！<span class="userName" id="username"></span></p>
+            </div>
+            <div class="navBar layui-side-scroll"></div>
+        </div>
+        <!-- 右侧内容 -->
+        <div class="layui-body layui-form">
+            <div class="layui-tab layui-tab-card marg0" lay-filter="bodyTab" id="top_tabs_box">
+                <ul class="layui-tab-title top_tab" id="top_tabs">
+                    <li class="layui-this" lay-id=""><i class="iconfont icon-computer"></i> <cite>后台首页</cite></li>
+                </ul>
+                <ul class="layui-nav closeBox">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="iconfont icon-caozuo"></i> 页面操作</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" class="refresh refreshThis"><i class="layui-icon">&#x1002;</i> 刷新当前</a></dd>
+                            <dd><a href="javascript:;" class="closePageOther"><i class="iconfont icon-prohibit"></i> 关闭其他</a></dd>
+                            <dd><a href="javascript:;" class="closePageAll"><i class="iconfont icon-guanbi"></i> 关闭全部</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <div class="layui-tab-content clildFrame">
+                    <div class="layui-tab-item layui-show">
+                        <iframe src="/Home/Main"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 底部 -->
+        <div class="layui-footer footer">
+            <p>copyright @@2018</p>
+        </div>
+    </div>
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+    <!-- 移动导航 -->
+    <div class="site-tree-mobile layui-hide"><i class="layui-icon">&#xe602;</i></div>
+    <div class="site-mobile-shade"></div>
 
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
-    </div>
-</div>
+    <script type="text/javascript" src="/layui/layui.js"></script>
+    <script type="text/javascript" src="/js/leftNav.js"></script>
+    <script type="text/javascript" src="/js/index.js?v=3"></script>
+</body>
+</html>

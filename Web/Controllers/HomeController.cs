@@ -1,24 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using App.Interface;
-using Microsoft.AspNetCore.Mvc;
-using Web.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller /*: BaseController*/
     {
-        public IActionResult Index()
-        {
+        //public IActionResult Index()
+        //{
 
+        //    return View();
+        //}
+
+        //public HomeController(IAuth authUtil) : base(authUtil)
+        //{
+        //}
+
+        public ActionResult Index()
+        {
             return View();
         }
 
-        public HomeController(IAuth authUtil) : base(authUtil)
+        public ActionResult Main()
         {
+            return View();
+        }
+
+
+
+        public ActionResult Git()
+        {
+            return View();
         }
     }
 }
