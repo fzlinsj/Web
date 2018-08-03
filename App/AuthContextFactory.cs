@@ -17,12 +17,14 @@ namespace App
         private SystemAuthStrategy _systemAuth;
         private NormalAuthStrategy _normalAuthStrategy;
         private readonly IUnitWork _unitWork;
+        private CommonUtilDbApp CommonUtil;
 
-        public AuthContextFactory(SystemAuthStrategy sysStrategy, NormalAuthStrategy normalAuthStrategy, IUnitWork unitWork)
+        public AuthContextFactory(SystemAuthStrategy sysStrategy, NormalAuthStrategy normalAuthStrategy, IUnitWork unitWork, CommonUtilDbApp commonUtil)
         {
             _systemAuth = sysStrategy;
             _normalAuthStrategy = normalAuthStrategy;
             _unitWork = unitWork;
+            CommonUtil = commonUtil;
         }
 
         public AuthStrategyContext GetAuthStrategyContext(string username)
@@ -35,10 +37,10 @@ namespace App
             else
             {
                 service = _normalAuthStrategy;
-                service.User = _unitWork.FindSingle<UserInfo>(u => u.Password == username);
+                service.User = _unitWork.FindSingle<UserInfo>(u => u.Id == username);
             }
 
-            return new AuthStrategyContext(service);
+            return new AuthStrategyContext(service) { CommonUtil = CommonUtil};
         }
     }
 }

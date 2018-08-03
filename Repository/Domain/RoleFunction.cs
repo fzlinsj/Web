@@ -25,7 +25,7 @@ namespace Repository.Domain
           this.CompanyCD= string.Empty;
           this.RoleID= 0;
           this.ModuleID= string.Empty;
-            this.ModifiedDate= DateTime.Now;
+          this.ModifiedDate= DateTime.Now;
           this.ModifiedUserID= string.Empty;
           this.Remark= string.Empty;
         }
@@ -45,7 +45,7 @@ namespace Repository.Domain
         /// <summary>
 	    /// 
 	    /// </summary>
-        public int? FunctionID { get; set; }
+        public int FunctionID { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>

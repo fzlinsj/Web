@@ -8,7 +8,7 @@ layui.config({
 		$ = layui.jquery;
 		tab = layui.bodyTab({
 			openTabNum : "50",  //最大可打开窗口数量
-			url: "/UserSession/GetModulesTree" //获取菜单json地址
+			url: "/Home/GetModulesTree" //获取菜单json地址
     });
 
     $.get('/UserSession/GetUserName',

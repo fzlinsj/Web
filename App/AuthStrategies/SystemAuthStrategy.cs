@@ -21,7 +21,7 @@ namespace App.AuthStrategies
         }
 
 
-        public List<ModuleView> Modules { get; }
+        public List<ModuleView> Modules { get; set; }
         public List<RoleInfo> Roles { get; }
         public List<Resource> Resources { get; }
         public List<Company> Orgs { get; }

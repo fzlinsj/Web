@@ -8,7 +8,7 @@ namespace App.Interface
 {
     public interface IAuthStrategy
     {
-        List<ModuleView> Modules { get; }
+        List<ModuleView> Modules { get; set; }
 
         List<RoleInfo> Roles { get; }
 

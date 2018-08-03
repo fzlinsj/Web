@@ -9,19 +9,21 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Core;
 
 namespace Repository.Domain
 {
     /// <summary>
-	/// 模块功能表
-	/// </summary>
+    /// 模块功能表
+    /// </summary>
+    [Table("ModuleFunction")]
     public partial class ModuleFunction : Entity
     {
         public ModuleFunction()
         {
-          this.ModuleID= 0;
-          this.FunctionID= 0;
+          this.ModuleID= string.Empty;
+            this.FunctionID= 0;
           this.FunctionCD= string.Empty;
           this.FunctionName= string.Empty;
           this.FunctionType= string.Empty;
@@ -30,7 +32,7 @@ namespace Repository.Domain
         /// <summary>
 	    /// 子系统编号
 	    /// </summary>
-        public int ModuleID { get; set; }
+        public string ModuleID { get; set; }
         /// <summary>
 	    /// 功能ID
 	    /// </summary>

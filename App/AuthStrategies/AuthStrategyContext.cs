@@ -25,7 +25,17 @@ namespace App.AuthStrategies
 
         public List<ModuleView> Modules
         {
-            get { return _strategy.Modules; }
+            get
+            {
+                if(CommonUtil!=null)
+                {
+
+                    _strategy.Modules=CommonUtil.GetMenuData(User.Id, User.CompanyCD);
+
+                }
+
+                return _strategy.Modules;
+            }
         }
 
         public List<RoleInfo> Roles
@@ -42,6 +52,8 @@ namespace App.AuthStrategies
         {
             get { return _strategy.Orgs; }
         }
+
+        public CommonUtilDbApp CommonUtil { get; set; }
 
     }
 }
